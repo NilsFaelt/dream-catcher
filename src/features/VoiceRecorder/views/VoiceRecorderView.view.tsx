@@ -25,6 +25,7 @@ export const VoiceRecorderView: FC<Props> = () => {
           autoPlay
           loop
           muted
+          playsInline
           className=' absolute left-0 right-0 bottom-0 top-0 object-cover w-full h-full'
         >
           <source src='/backdrop.MP4' type='video/mp4' />

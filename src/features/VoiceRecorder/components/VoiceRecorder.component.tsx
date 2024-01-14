@@ -35,7 +35,7 @@ export const VoiceRecorder: FC = () => {
     console.log("Recording Blob:", recordingBlob);
   }, [recordingBlob]);
   return (
-    <form className='flex flex-col gap-5'>
+    <form className=' flex flex-col gap-5 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
       <AudioRecorder
         // downloadOnSavePress={true}
         showVisualizer={true}

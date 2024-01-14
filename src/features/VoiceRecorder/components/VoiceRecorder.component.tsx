@@ -9,6 +9,7 @@ import { useAudioRecorder } from "react-audio-voice-recorder";
 
 export const VoiceRecorder: FC = () => {
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
+  const [startSharing, setStartSharing] = useState(false);
   const [recording, setRecording] = useState(false);
   const startRecording = () => {
     setRecording(true);
@@ -35,25 +36,54 @@ export const VoiceRecorder: FC = () => {
     console.log("Recording Blob:", recordingBlob);
   }, [recordingBlob]);
   return (
-    <form className=' flex flex-col gap-5 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
-      <AudioRecorder
-        // downloadOnSavePress={true}
-        showVisualizer={true}
-        onRecordingComplete={addAudioElement}
-      />
-      {transcript}
-      <input required placeholder='Name' className=' rounded-md border p-5' />
-      <input required placeholder='Mail' className=' rounded-md border p-5' />
-      {recording && <h2>RECORDING</h2>}
-      <button
-        onClick={() => {
-          setRecording(false);
-        }}
-        className=' hover:bg-blue-100 border border-white p-10 rounded-md shadow-md bg-white'
-      >
-        SAVE RECORDING
-      </button>{" "}
-    </form>
+    <>
+      {startSharing ? (
+        <form className=' items-center flex flex-col gap-5 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
+          <h2 className=' text-1xl'>
+            <span className='font-bold'>What are you</span> Dreaming about
+          </h2>
+          <AudioRecorder
+            // downloadOnSavePress={true}
+            showVisualizer={true}
+            onRecordingComplete={addAudioElement}
+          />
+          {transcript}
+          <input
+            required
+            placeholder='Name'
+            className=' placeholder:text-black rounded-md border p-5 bg-transparent'
+          />
+          <input
+            required
+            placeholder='Mail'
+            className=' placeholder:text-black rounded-md border p-5 bg-transparent '
+          />
+          {recording && <h2>RECORDING</h2>}
+          <button
+            onClick={() => {
+              setRecording(false);
+            }}
+            className=' hover:bg-blue-100 border border-white p-10 rounded-md shadow-md bg-transparent'
+          >
+            SAVE RECORDING
+          </button>{" "}
+        </form>
+      ) : (
+        <div className=' flex flex-col gap-5 justify-center items-center  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 '>
+          <h2 className=' text-3xl'>
+            <span className='font-bold'>Dream</span> Collector
+          </h2>
+          <button
+            onClick={() => {
+              setStartSharing(true);
+            }}
+            className='  hover:bg-blue-100 border border-white p-10 rounded-md shadow-md bg-transparent'
+          >
+            PRESS HERE TO START SHARING
+          </button>
+        </div>
+      )}
+    </>
   );
 };
 

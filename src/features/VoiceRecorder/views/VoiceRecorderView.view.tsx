@@ -1,14 +1,15 @@
 import React, { FC } from "react";
 import { Header } from "@/components";
 import { VoiceRecorder } from "..";
+import { InfoText } from "@/components/InfoText";
 
 interface Props {}
 
 export const VoiceRecorderView: FC<Props> = () => {
   return (
-    <div className=' '>
+    <div className='min-h-screen'>
       <Header />
-      <div>
+      <div className='w-full h-full'>
         <video
           autoPlay
           loop

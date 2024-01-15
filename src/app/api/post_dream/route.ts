@@ -8,7 +8,10 @@ type ReqData = {
   blob: string;
 };
 const client = new MongoClient(process.env.MONGO_DB_URL as string);
-export const POST = async (req: any, res: NextApiResponse<ReqData>) => {
+export const POST = async (
+  req: any,
+  res: NextApiResponse<ReqData>
+): Promise<void | Response> => {
   const data = await req.json();
 
   console.log(` documents inserted`, data);
@@ -25,6 +28,5 @@ export const POST = async (req: any, res: NextApiResponse<ReqData>) => {
     return Response.json(result);
   } catch (err) {
     console.log(err);
-    return { err: "buhuuuu" };
   }
 };

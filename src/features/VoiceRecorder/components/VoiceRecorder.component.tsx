@@ -6,13 +6,13 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import { AudioRecorder } from "react-audio-voice-recorder";
 import { useAudioRecorder } from "react-audio-voice-recorder";
-import { InfoText } from "@/components/InfoText";
 
 export const VoiceRecorder: FC = () => {
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
   const [startSharing, setStartSharing] = useState(false);
   const [name, setName] = useState("");
   const [mail, setMail] = useState("");
+  const [blob, setBlob] = useState<any>(null);
   const [recording, setRecording] = useState(false);
   const startRecording = () => {
     setRecording(true);
@@ -23,44 +23,42 @@ export const VoiceRecorder: FC = () => {
     setRecording(false);
     SpeechRecognition.stopListening();
   };
-
+  console;
   const addAudioElement = (blob: any) => {
     const url = URL.createObjectURL(blob);
     const audio = document.createElement("audio");
-    console.log(audio, "audoii");
-    console.log(audio, "url");
+    console.log(blob, "audoii");
     audio.src = url;
     audio.controls = true;
-    document.body.appendChild(audio);
+    setBlob(blob);
+    // document.body.appendChild(audio);
   };
 
-  useEffect(() => {
-    if (!recordingBlob) return;
-    console.log("Recording Blob:", recordingBlob);
-  }, [recordingBlob]);
-
   const postDream = async () => {
+    addAudioElement;
     try {
-      fetch("/api/post_dream", {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("mail", mail);
+      formData.append("blob", blob);
+
+      console.log(formData.get("blob"), " fomr");
+      const response = await fetch("/api/post_dream", {
         method: "POST",
-        body: JSON.stringify({ name: name, mail: mail, blob: "blob" }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => {
-          return res.json();
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      // console.log(data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
+  console.log(blob);
 
   return (
     <>
@@ -94,9 +92,11 @@ export const VoiceRecorder: FC = () => {
             className=' placeholder:text-black rounded-md border p-5 bg-transparent '
           />
           {recording && <h2>RECORDING</h2>}
-          <button className=' hover:bg-blue-100 border border-white p-10 rounded-md shadow-md bg-transparent'>
-            SAVE RECORDING
-          </button>{" "}
+          {blob && (
+            <button className=' hover:bg-blue-100 border border-white p-10 rounded-md shadow-md bg-transparent'>
+              UPLOAD RECORDING
+            </button>
+          )}
         </form>
       ) : (
         <div className=' flex flex-col gap-5 justify-center items-center  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-3/4 '>

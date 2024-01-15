@@ -2,7 +2,6 @@
 import React, { FC, useEffect, useRef } from "react";
 import { Header } from "@/components";
 import { VoiceRecorder } from "..";
-import { InfoText } from "@/components/InfoText";
 
 interface Props {}
 

@@ -9,6 +9,7 @@ import { useAudioRecorder } from "react-audio-voice-recorder";
 import { useRouter } from "next/navigation";
 import { Spinner } from "@/ui";
 import { StartSharing } from "./StartSharing.component";
+import { DisplayRecording } from "./DisplayRecording.component";
 
 export const VoiceRecorder: FC = () => {
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
@@ -93,7 +94,7 @@ export const VoiceRecorder: FC = () => {
             className=' placeholder:text-black rounded-md border p-5 bg-transparent'
           />
 
-          {recording && <h2 className='text-red-500'> • RECORDING</h2>}
+          {recording && <DisplayRecording />}
           {recorder.recordingBlob && (
             <audio controls src={URL.createObjectURL(recorder.recordingBlob)} />
           )}

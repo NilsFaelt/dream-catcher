@@ -1,33 +1,26 @@
 "use client";
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useState } from "react";
 import "regenerator-runtime/runtime";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { AudioRecorder } from "react-audio-voice-recorder";
 import { useAudioRecorder } from "react-audio-voice-recorder";
+import { useRouter } from "next/navigation";
 
 export const VoiceRecorder: FC = () => {
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
   const [startSharing, setStartSharing] = useState(false);
   const [name, setName] = useState("");
-  const [mail, setMail] = useState("");
+  const [mail, setMail] = useState("Non Added");
   const [blob, setBlob] = useState<any>(null);
   const [recording, setRecording] = useState(false);
-  const startRecording = () => {
-    setRecording(true);
-    SpeechRecognition.startListening();
-  };
-  const { recordingBlob } = useAudioRecorder();
-  const stopRecording = () => {
-    setRecording(false);
-    SpeechRecognition.stopListening();
-  };
+  const router = useRouter();
+
   console;
   const addAudioElement = (blob: any) => {
     const url = URL.createObjectURL(blob);
     const audio = document.createElement("audio");
-    console.log(blob, "audoii");
     audio.src = url;
     audio.controls = true;
     setBlob(blob);
@@ -42,8 +35,7 @@ export const VoiceRecorder: FC = () => {
       formData.append("mail", mail);
       formData.append("blob", blob);
 
-      console.log(formData.get("blob"), " fomr");
-      const response = await fetch("/api/post_dream", {
+      const response = await fetch("/api/dream", {
         method: "POST",
         body: formData,
       });
@@ -51,9 +43,8 @@ export const VoiceRecorder: FC = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
+      router.push("/greeting");
       const data = await response.json();
-      // console.log(data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -85,12 +76,12 @@ export const VoiceRecorder: FC = () => {
             placeholder='Name'
             className=' placeholder:text-black rounded-md border p-5 bg-transparent'
           />
-          <input
+          {/* <input
             onChange={(e) => setMail(e.target.value)}
             required
             placeholder='Mail'
             className=' placeholder:text-black rounded-md border p-5 bg-transparent '
-          />
+          /> */}
           {recording && <h2>RECORDING</h2>}
           {blob && (
             <button className=' hover:bg-blue-100 border border-white p-10 rounded-md shadow-md bg-transparent'>

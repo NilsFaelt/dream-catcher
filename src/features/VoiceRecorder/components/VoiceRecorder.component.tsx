@@ -7,6 +7,7 @@ import SpeechRecognition, {
 import { AudioRecorder } from "react-audio-voice-recorder";
 import { useAudioRecorder } from "react-audio-voice-recorder";
 import { useRouter } from "next/navigation";
+import { Spinner } from "@/ui";
 
 export const VoiceRecorder: FC = () => {
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
@@ -15,6 +16,7 @@ export const VoiceRecorder: FC = () => {
   const [mail, setMail] = useState("Non Added");
   const [blob, setBlob] = useState<any>(null);
   const [recording, setRecording] = useState(false);
+  const [loading, setLoding] = useState(false);
   const router = useRouter();
 
   console;
@@ -28,6 +30,7 @@ export const VoiceRecorder: FC = () => {
   };
 
   const postDream = async () => {
+    setLoding(true);
     addAudioElement;
     try {
       const formData = new FormData();
@@ -47,10 +50,12 @@ export const VoiceRecorder: FC = () => {
       const data = await response.json();
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
+      setLoding(false);
     }
   };
   console.log(blob);
-
+  if (loading) return <Spinner />;
   return (
     <>
       {startSharing ? (
@@ -64,8 +69,8 @@ export const VoiceRecorder: FC = () => {
           <h2 className=' text-center text-1xl'>
             <span className='font-bold'>What are you</span> Dreaming about
           </h2>
+
           <AudioRecorder
-            // downloadOnSavePress={true}
             showVisualizer={true}
             onRecordingComplete={addAudioElement}
           />
@@ -82,6 +87,7 @@ export const VoiceRecorder: FC = () => {
             placeholder='Mail'
             className=' placeholder:text-black rounded-md border p-5 bg-transparent '
           /> */}
+
           {recording && <h2>RECORDING</h2>}
           {blob && (
             <button className=' hover:bg-blue-100 border border-white p-10 rounded-md shadow-md bg-transparent'>

@@ -11,6 +11,7 @@ import { Spinner } from "@/ui";
 
 export const VoiceRecorder: FC = () => {
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
+  const { stopRecording, recordingBlob, startRecording } = useAudioRecorder();
   const [startSharing, setStartSharing] = useState(false);
   const [name, setName] = useState("");
   const [mail, setMail] = useState("Non Added");
@@ -25,10 +26,11 @@ export const VoiceRecorder: FC = () => {
     const audio = document.createElement("audio");
     audio.src = url;
     audio.controls = true;
+    console.log(blob);
     setBlob(blob);
     // document.body.appendChild(audio);
   };
-
+  console.log(recordingBlob);
   const postDream = async () => {
     setLoding(true);
     addAudioElement;
@@ -54,7 +56,7 @@ export const VoiceRecorder: FC = () => {
       setLoding(false);
     }
   };
-  console.log(blob);
+
   if (loading) return <Spinner />;
   return (
     <>
@@ -74,6 +76,7 @@ export const VoiceRecorder: FC = () => {
             showVisualizer={true}
             onRecordingComplete={addAudioElement}
           />
+
           {transcript}
           <input
             onChange={(e) => setName(e.target.value)}
@@ -81,12 +84,6 @@ export const VoiceRecorder: FC = () => {
             placeholder='Name'
             className=' placeholder:text-black rounded-md border p-5 bg-transparent'
           />
-          {/* <input
-            onChange={(e) => setMail(e.target.value)}
-            required
-            placeholder='Mail'
-            className=' placeholder:text-black rounded-md border p-5 bg-transparent '
-          /> */}
 
           {recording && <h2>RECORDING</h2>}
           {blob && (

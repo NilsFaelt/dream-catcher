@@ -6,7 +6,7 @@ interface Props {
 export const StartSharing: FC<Props> = ({ setStartSharing }) => {
   return (
     <div className=' flex flex-col gap-5 justify-center items-center  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-3/4 '>
-      <h2 className=' text-3xl'>
+      <h2 className='text-4xl md:text-7xl whitespace-nowrap'>
         <span className='font-bold'>Dream</span> Collector
       </h2>
       <div className=' flex gap-1 flex-col justify-start items-center text-center'>
@@ -24,11 +24,12 @@ export const StartSharing: FC<Props> = ({ setStartSharing }) => {
         PRESS HERE TO START SHARING
       </button>
       <div className='flex gap-1 flex-col justify-start items-center text-center'>
-        <p className=' text-sm'>
+        <p className=' '>
           *The Dream Collector is a part of Anna Gyllenklevs Master Thesis: The
-          world I would like to live in, at Konstfack University (Arts, Crafts
-          and Design), which explores the relationships and interdependencies
-          between humans, human made, and more than human.
+          world I would like to live in, pursued at Konstfack (University of
+          Arts, Crafts and Design), which explores the relationships and
+          interdependencies between human visioning, human made objects, and the
+          broader more than human worlds.
         </p>
       </div>
     </div>

@@ -4,7 +4,6 @@ import "regenerator-runtime/runtime";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import { AudioRecorder } from "react-audio-voice-recorder";
 import { useAudioRecorder } from "react-audio-voice-recorder";
 import { useRouter } from "next/navigation";
 import { Spinner } from "@/ui";
@@ -13,7 +12,6 @@ import { DisplayRecording } from "./DisplayRecording.component";
 
 export const VoiceRecorder: FC = () => {
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
-  const { stopRecording, recordingBlob, startRecording } = useAudioRecorder();
   const [startSharing, setStartSharing] = useState(false);
   const [name, setName] = useState("");
   const [mail, setMail] = useState("Non Added");
@@ -80,12 +78,6 @@ export const VoiceRecorder: FC = () => {
           <h2 className=' text-center text-1xl'>
             <span className='font-bold'>What are you</span> Dreaming about
           </h2>
-
-          {/* <AudioRecorder
-            showVisualizer={true}
-            onRecordingComplete={addAudioElement}
-          /> */}
-
           {transcript}
           <input
             onChange={(e) => setName(e.target.value)}

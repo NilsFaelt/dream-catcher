@@ -66,7 +66,7 @@ export const GET = async (
     await client.connect();
     const database = client.db("dream_catcher");
     const collection = database.collection("dreams");
-    const cursor = collection.find({}, { skip: 15, limit: 15 });
+    const cursor = collection.find();
     const documents = await cursor.toArray();
 
     return new Response(JSON.stringify(documents), {

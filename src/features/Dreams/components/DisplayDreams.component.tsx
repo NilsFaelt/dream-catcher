@@ -30,20 +30,26 @@ export const DisplayDreams = () => {
   useEffect(() => {
     fetchDreams();
   }, []);
-  if (loading) return <Spinner />;
+  if (loading)
+    return (
+      <div className='w-full flex justify-center align-middle items-center'>
+        <Spinner />
+      </div>
+    );
   if (!dreams) return <h2>Could Not Get Dreams</h2>;
 
   return (
     <div className=' mt-20 flex flex-col items-center'>
-      {dreams?.map((dream, i) => {
-        return (
-          <div key={i}>
-            <p>Name: {dream.name}</p>
-            <p>Mail: {dream.mail}</p>
-            <audio controls src={`data:audio/mpeg;base64,${dream?.blob}`} />
-          </div>
-        );
-      })}
+      {dreams !== null &&
+        dreams?.map((dream, i) => {
+          return (
+            <div key={i}>
+              <p>Name: {dream.name}</p>
+              <p>Mail: {dream.mail}</p>
+              <audio controls src={`data:audio/mpeg;base64,${dream?.blob}`} />
+            </div>
+          );
+        })}
     </div>
   );
 };

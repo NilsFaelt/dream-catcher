@@ -6,11 +6,11 @@ const Page = () => {
     <div
       className='min-h-screen min-w-full flex items-center justify-center text-white'
       style={{
-        position: "relative", // Necessary for the image to cover the entire div
+        position: "relative",
       }}
     >
       <Image
-        src='/clouds.png' // Path to your image in the public folder
+        src='/clouds.png'
         alt='Background Image'
         layout='fill'
         objectFit='cover'
